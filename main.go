@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net"
 )
@@ -16,10 +17,20 @@ func main() {
 
 	buf := make([]byte, 1500)
 	for {
-		length, remoteAddr, err := conn.ReadFrom(buf)
+		_, remoteAddr, err := conn.ReadFrom(buf)
 		if err != nil {
 			panic(err)
 		}
-		log.Printf("\nreceived from %v ->\n%v", remoteAddr, buf[:length])
+		log.Printf("received from %v ->\n", remoteAddr)
+
+		tmp := []byte{}
+		for i := range buf {
+			tmp = append(tmp, buf[i])
+
+			if (i+1)%4 == 0 {
+				fmt.Printf("%v\n", tmp)
+				tmp = nil
+			}
+		}
 	}
 }

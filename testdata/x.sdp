@@ -1,0 +1,4 @@
+SDP:
+c=IN IP6 ::1
+m=audio 8080 RTP/AVP 97
+a=rtpmap:97 PCMU/44100/2
